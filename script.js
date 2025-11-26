@@ -47,3 +47,39 @@ const observer = new IntersectionObserver(
 document
   .querySelectorAll(".fade-on-scroll")
   .forEach((el) => observer.observe(el));
+
+// --- Мобильное меню (Бургер) ---
+const burger = document.querySelector(".burger");
+const nav = document.querySelector(".nav-links");
+const navLinks = document.querySelectorAll(".nav-links li");
+
+// Функция переключения меню
+const toggleMenu = () => {
+  // Переключаем класс навигации
+  nav.classList.toggle("nav-active");
+
+  // Анимация ссылок (появление)
+  navLinks.forEach((link, index) => {
+    if (link.style.animation) {
+      link.style.animation = "";
+    } else {
+      link.style.animation = `navLinkFade 0.5s ease forwards ${
+        index / 7 + 0.3
+      }s`;
+    }
+  });
+
+  // Анимация крестика
+  burger.classList.toggle("toggle");
+};
+
+burger.addEventListener("click", toggleMenu);
+
+// Закрываем меню при клике на ссылку
+navLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    if (nav.classList.contains("nav-active")) {
+      toggleMenu();
+    }
+  });
+});
